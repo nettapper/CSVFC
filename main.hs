@@ -26,7 +26,7 @@ printRandomCard cards = do
     printCard rcard
 
 pick :: [a] -> IO a
-pick xs = randomRIO (0, length xs - 1) >>= return . (xs !!)
+pick xs = fmap (xs !!) (randomRIO (0, length xs - 1))
 
 printCard :: [String] -> IO ()
 printCard card = do
