@@ -5,18 +5,26 @@ main :: IO ()
 main = do
     raw <- readFile "/Users/Conner/Desktop/282Questions.txt"
     hSetBuffering stdin NoBuffering
-    doUntilQ raw
+    doUntilQ $ parse raw
 
-doUntilQ :: String -> IO ()
+doUntilQ :: [[String]] -> IO ()
 doUntilQ raw = do
     x <- getLine
     case x of
          "q" -> return ()
          "Q" -> return ()
          _   ->  do
-             print ("The first question is" : [x])
-             print $ parse raw
+             print "The first question is"
+             --print $ parse raw
+             printCard raw
              doUntilQ raw
+
+printCard :: [[String]] -> IO ()
+printCard raw = do
+    print $ head $ head raw
+    x <- getLine
+    print $ head $ tail $ head raw
+
 
 parse :: String -> [[String]]
 parse s = map splitToTuple $ lines s
