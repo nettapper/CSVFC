@@ -8,6 +8,8 @@ a quick (as in about an hour to make) and dirty way that i'm using to study flas
 ## Run
 you will have to manually edit the file path
 
+press `q` or `Q` to quit and any other key to ge the next random question
+
 `runghc main.hs`
 
 ## File format
