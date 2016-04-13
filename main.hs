@@ -1,5 +1,6 @@
 import Data.Text (pack, unpack, splitOn)
 import System.IO
+import System.Random (randomRIO)
 
 main :: IO ()
 main = do
@@ -9,20 +10,29 @@ main = do
 
 doUntilQ :: [[String]] -> IO ()
 doUntilQ cards = do
-    x <- getLine
+    x <- getChar
     case x of
-         "q" -> return ()
-         "Q" -> return ()
+         'q' -> return ()
+         'Q' -> return ()
          _   ->  do
-             print "The first question is"
-             printCard cards
+             print ""
+             print "The question is..."
+             printRandomCard cards
              doUntilQ cards
 
-printCard :: [[String]] -> IO ()
-printCard cards = do
-    print $ head $ head cards
-    x <- getLine
-    print $ head $ tail $ head cards
+printRandomCard :: [[String]] -> IO ()
+printRandomCard cards = do
+    rcard <- pick cards
+    printCard rcard
+
+pick :: [a] -> IO a
+pick xs = randomRIO (0, length xs - 1) >>= return . (xs !!)
+
+printCard :: [String] -> IO ()
+printCard card = do
+    print $  head card
+    x <- getChar
+    print $ head $ tail card
 
 
 parse :: String -> [[String]]
