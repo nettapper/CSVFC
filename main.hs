@@ -8,22 +8,21 @@ main = do
     doUntilQ $ parse raw
 
 doUntilQ :: [[String]] -> IO ()
-doUntilQ raw = do
+doUntilQ cards = do
     x <- getLine
     case x of
          "q" -> return ()
          "Q" -> return ()
          _   ->  do
              print "The first question is"
-             --print $ parse raw
-             printCard raw
-             doUntilQ raw
+             printCard cards
+             doUntilQ cards
 
 printCard :: [[String]] -> IO ()
-printCard raw = do
-    print $ head $ head raw
+printCard cards = do
+    print $ head $ head cards
     x <- getLine
-    print $ head $ tail $ head raw
+    print $ head $ tail $ head cards
 
 
 parse :: String -> [[String]]
