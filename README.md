@@ -3,7 +3,7 @@ comma seperated values flash cards
 
 note: i haven't even read how to parse csv files (see file format)
 
-a quick and dirty way that i'm using to study flash cards
+a quick (as in about an hour to make) and dirty way that i'm using to study flash cards
 
 ## Run
 you will have to manually edit the file path
