@@ -1,3 +1,5 @@
+module Main where
+
 import Data.Char (toLower)
 import Data.Text (pack, unpack, splitOn)
 import System.IO
