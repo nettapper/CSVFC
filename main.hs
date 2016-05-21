@@ -1,3 +1,4 @@
+import Data.Char (toLower)
 import Data.Text (pack, unpack, splitOn)
 import System.IO
 import System.Random (randomRIO)
@@ -10,12 +11,10 @@ main = do
 doUntilQ :: [[String]] -> IO ()
 doUntilQ cards = do
     x <- getChar
-    case x of
+    case (toLower x) of
          'q' -> return ()
-         'Q' -> return ()
          _   ->  do
-             print ""
-             print "The question is..."
+             putStrLn "\nThe question is..."
              randCard <- pick cards
              printCard randCard
              doUntilQ cards
