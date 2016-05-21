@@ -10,7 +10,13 @@ you will have to manually edit the file path
 
 press `q` or `Q` to quit and any other key to ge the next random question
 
-`runghc main.hs`
+after downloading stack, issue the following commands
+
+`stack setup`
+
+`stack build`
+
+`stack exec CSVFC`
 
 ## File format
 one question answer pair per line
@@ -18,3 +24,5 @@ one question answer pair per line
 only one comma allowed in each line
 
 i currently don't do any error handling
+
+eg. `awesome question 1, awesome answer 1`
