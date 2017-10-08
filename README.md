@@ -1,28 +1,34 @@
 # CSVFC
-comma seperated values flash cards
+Comma seperated values flash cards  
+![Screenie](demo.png)
 
-note: i haven't even read how to parse csv files (see file format)
+## Files
+```
+.
+├── CSVFC.cabal -- Describes the project
+├── LICENSE     -- The default licence from Stack
+├── README.md   -- This file
+├── Setup.hs    -- A Stack file?
+├── demo.png    -- The amazing Screenie!!
+├── src
+│   └── main.hs -- The core logic of CSVFC
+├── stack.yaml  -- Stack config
+└── test.csv    -- An example csv Q&A file format
 
-a quick (as in about an hour to make) and dirty way that i'm using to study flash cards
+1 directory, 8 files
+```
 
 ## Run
-you will have to manually edit the file path
+Before running you will have to manually edit the filepath varialbe in src/main.hs   
 
-press `q` or `Q` to quit and any other key to ge the next random question
-
-after downloading stack, issue the following commands
-
-`stack setup`
-
-`stack build`
-
-`stack exec CSVFC`
+After downloading [Stack](https://docs.haskellstack.org/en/stable/README/#how-to-install), issue the following commands.  
+`stack setup`  
+`stack build`  
+`stack exec CSVFC`   
+Note: Haskell GHC will be download for you and managed for you by Stack.  
 
 ## File format
-one question answer pair per line
-
-only one comma allowed in each line
-
-i currently don't do any error handling
-
-eg. `awesome question 1, awesome answer 1`
+One question answer pair per line.  
+Only one comma allowed in each line.  
+I do very litter error handling so it might blow up :)  
+For more examples see `test.csv`.  
