@@ -3,13 +3,12 @@ module Main where
 import Data.Char (toLower)
 import Data.Text (pack, unpack, breakOn, Text, tail, strip)
 import System.IO
-import Control.Monad (forever)
 import System.Random (randomRIO)
 
 data Card = Card
   { front :: Text
   , back :: Text
-  }
+  } deriving (Show)
 
 filePath :: String
 filePath = "./test.csv"
@@ -21,18 +20,31 @@ main = do
     putStrLn "Press Ctrl-C / Ctrl-D to exit, depending on your system."
     putStrLn ""
     doUntilQ $ parseFileContents raw
+    putStrLn "Looks like you've reached the end of the file."
+    putStrLn "Thanks for usings CSVFC."
 
 doUntilQ :: [Card] -> IO ()
-doUntilQ cards = forever $ do
-  randCard <- pickRandOne cards
-  interactiveShow randCard
-  doUntilQ cards
+doUntilQ [] = return ()
+doUntilQ cards = do
+  i <- randomRIO (0, length cards - 1)
+  let (mc, cs) = getNextCard cards i
+  case mc of
+       Just c -> do
+         interactiveShowCard c
+       Nothing -> return ()
+  doUntilQ cs
 
-pickRandOne :: [a] -> IO a
-pickRandOne xs = fmap (xs !!) (randomRIO (0, length xs - 1))
+getNextCard :: [Card] -> Int -> (Maybe Card, [Card])
+getNextCard [] _ = (Nothing, [])
+getNextCard cs i = (Just (cs !! i), allBut cs i)
 
-interactiveShow :: Card -> IO ()
-interactiveShow card = do
+allBut :: [Card] -> Int -> [Card]
+allBut [] _ = []
+allBut cs 0 = Prelude.tail cs
+allBut (c:cs) i = c : allBut cs (i - 1)
+
+interactiveShowCard :: Card -> IO ()
+interactiveShowCard card = do
   putStrLn "Press any key when ready to see the answer and when ready to proceed..."
   putStrLn $ "Q: " ++ (unpack $ front card)
   x <- getChar
