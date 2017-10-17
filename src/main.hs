@@ -43,11 +43,11 @@ getNextCard = flip maybeExtract
 maybeExtract :: Int -> [a] -> (Maybe a, [a])
 maybeExtract _ [] = (Nothing, [])
 maybeExtract i as =
-  let (fhalf, bhalf) = splitAt i as
+  let (fhalf, bhalf) = splitAt (i + 1) as
    in case fhalf of
            [] -> (Nothing, bhalf)
            _ -> (Just (last fhalf), allButLast fhalf ++ bhalf)
-  where allButLast = Prelude.tail . reverse
+  where allButLast = reverse . Prelude.tail . reverse
 
 
 interactiveShowCard :: Card -> IO ()
