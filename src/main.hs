@@ -4,6 +4,7 @@ import Data.Char (toLower)
 import Data.Text (pack, unpack, breakOn, Text, tail, strip)
 import System.IO
 import System.Random (randomRIO)
+import System.Exit (exitSuccess)
 
 data Card = Card
   { front :: Text
@@ -22,6 +23,7 @@ main = do
     doUntilQ $ parseFileContents raw
     putStrLn "Looks like you've reached the end of the file."
     putStrLn "Thanks for usings CSVFC."
+    exitSuccess
 
 doUntilQ :: [Card] -> IO ()
 doUntilQ [] = return ()
@@ -31,17 +33,22 @@ doUntilQ cards = do
   case mc of
        Just c -> do
          interactiveShowCard c
+         doUntilQ cs
        Nothing -> return ()
-  doUntilQ cs
+  return ()
 
 getNextCard :: [Card] -> Int -> (Maybe Card, [Card])
-getNextCard [] _ = (Nothing, [])
-getNextCard cs i = (Just (cs !! i), allBut cs i)
+getNextCard = flip maybeExtract
 
-allBut :: [Card] -> Int -> [Card]
-allBut [] _ = []
-allBut cs 0 = Prelude.tail cs
-allBut (c:cs) i = c : allBut cs (i - 1)
+maybeExtract :: Int -> [a] -> (Maybe a, [a])
+maybeExtract _ [] = (Nothing, [])
+maybeExtract i as =
+  let (fhalf, bhalf) = splitAt i as
+   in case fhalf of
+           [] -> (Nothing, bhalf)
+           _ -> (Just (last fhalf), allButLast fhalf ++ bhalf)
+  where allButLast = Prelude.tail . reverse
+
 
 interactiveShowCard :: Card -> IO ()
 interactiveShowCard card = do
