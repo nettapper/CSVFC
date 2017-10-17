@@ -63,7 +63,8 @@ interactiveShowCard card = do
   return ()
 
 parseFileContents :: String -> [Card]
-parseFileContents s = map splitToCard $ lines s
+parseFileContents s = map splitToCard $ filter (not . aComment) $ lines s
+  where aComment (s:_) = s == '#'
 
 splitToCard :: String -> Card
 splitToCard s = Card {front = f, back = b}

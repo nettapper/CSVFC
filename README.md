@@ -29,6 +29,7 @@ Note: Haskell GHC will be download for you and managed for you by Stack.
 
 ## File format
 One question answer pair per line.  
-Only one comma allowed in each line.  
+Only one comma allowed in each line. (Might or might not sitll be true... TBD)  
 I do very litter error handling so it might blow up :)  
+You can add a comment if the first char in the line is `#`  
 For more examples see `test.csv`.  
