@@ -1,4 +1,10 @@
-module CSVFC where
+module CSVFC
+  ( Card
+  , front
+  , back
+  , getNextCard
+  , parseFileContents
+  ) where
 
 import Data.Text (pack, breakOn, Text, tail, strip)
 
