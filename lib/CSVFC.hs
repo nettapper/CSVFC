@@ -2,8 +2,9 @@ module CSVFC
   ( Card
   , front
   , back
-  , getNextCard
   , parseFileContents
+  , getNextCard
+  , maybeExtract
   ) where
 
 import Data.Text (pack, breakOn, Text, tail, strip)

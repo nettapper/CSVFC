@@ -38,4 +38,5 @@ test-suite tests
   build-depends:        base
                       , CSVFC
                       , QuickCheck
+                      , hspec
   default-language:     Haskell2010
