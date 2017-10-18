@@ -1,19 +1,15 @@
 module Main where
 
-import Data.Char (toLower)
-import Data.Text (pack, unpack, breakOn, Text, tail, strip)
 import System.IO
 import System.Random (randomRIO)
 import System.Exit (exitSuccess)
-
-data Card = Card
-  { front :: Text
-  , back :: Text
-  } deriving (Show)
+import Data.Text (unpack)
+import CSVFC (Card, front, back, getNextCard, parseFileContents)
 
 filePath :: String
 filePath = "./test.csv"
 
+main :: IO ()
 main = do
     hSetBuffering stdin NoBuffering
     putStrLn $ "Reading in from file: " ++ filePath
@@ -39,19 +35,6 @@ doUntilQ cards = do
        Nothing -> return ()
   return ()
 
-getNextCard :: [Card] -> Int -> (Maybe Card, [Card])
-getNextCard = flip maybeExtract
-
-maybeExtract :: Int -> [a] -> (Maybe a, [a])
-maybeExtract _ [] = (Nothing, [])
-maybeExtract i as =
-  let (fhalf, bhalf) = splitAt (i + 1) as
-   in case fhalf of
-           [] -> (Nothing, bhalf)
-           _ -> (Just (last fhalf), allButLast fhalf ++ bhalf)
-  where allButLast = reverse . Prelude.tail . reverse
-
-
 interactiveShowCard :: Card -> IO ()
 interactiveShowCard card = do
   putStrLn "Press any key when ready to see the answer and when ready to proceed..."
@@ -63,13 +46,3 @@ interactiveShowCard card = do
   x <- getChar
   putStr "\b"  -- a sneaky way to delete the getChar from above
   return ()
-
-parseFileContents :: String -> [Card]
-parseFileContents s = map splitToCard $ filter (not . aComment) $ lines s
-  where aComment (s:_) = s == '#'
-
-splitToCard :: String -> Card
-splitToCard s = Card {front = f, back = b}
-  where cardTuple = breakOn (pack ",") $ pack s
-        f = fst cardTuple
-        b = Data.Text.strip $ Data.Text.tail $ snd cardTuple
