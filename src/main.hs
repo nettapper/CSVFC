@@ -19,8 +19,10 @@ main = do
     putStrLn $ "Reading in from file: " ++ filePath
     raw <- readFile filePath
     putStrLn "Press Ctrl-C / Ctrl-D to exit, depending on your system."
+    let parsedCards = parseFileContents raw
+    putStrLn $ "Successfully loaded " ++ show (length parsedCards) ++ " card(s)."
     putStrLn ""
-    doUntilQ $ parseFileContents raw
+    doUntilQ parsedCards
     putStrLn "Looks like you've reached the end of the file."
     putStrLn "Thanks for usings CSVFC."
     exitSuccess
