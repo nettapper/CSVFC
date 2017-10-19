@@ -5,17 +5,23 @@ Comma seperated values flash cards
 ## Files
 ```
 .
-├── CSVFC.cabal -- Describes the project
-├── LICENSE     -- The default licence from Stack
-├── README.md   -- This file
-├── Setup.hs    -- A Stack file?
-├── demo.png    -- The amazing Screenie!!
+├── CSVFC.cabal   -- Describes the project
+├── LICENSE       -- The default licence from Stack
+├── README.md     -- This file
+├── Setup.hs      -- A Stack file?
+├── demo.png      -- The amazing Screenie!!
+├── lib
+│   └── CSVFC.hs  -- The core functions of CSVFC
 ├── src
-│   └── main.hs -- The core logic of CSVFC
-├── stack.yaml  -- Stack config
-└── test.csv    -- An example csv Q&A file format
+│   └── main.hs   -- The UI wrapper for the core CSVFC
+├── stack.yaml    -- Stack config
+├── study         -- Untracked folder filled with my flashcards
+│   └── ...
+└── test.csv      -- An example csv Q&A file format
+└── tests         -- The testing directory
+    └── tests.hs
 
-1 directory, 8 files
+4 directories, 10 files
 ```
 
 ## Run
