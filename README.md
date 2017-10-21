@@ -14,7 +14,7 @@ Comma seperated values flash cards
 ├── lib
 │   └── CSVFC.hs  -- The core functions of CSVFC
 ├── src
-│   └── main.hs   -- The UI wrapper for the core CSVFC
+│   └── Main.hs   -- The UI wrapper for the core CSVFC
 ├── stack.yaml    -- Stack config
 ├── study         -- Untracked folder filled with my flashcards
 │   └── ...
