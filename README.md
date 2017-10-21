@@ -1,4 +1,5 @@
 # CSVFC
+[![Build Status](https://travis-ci.org/nettapper/CSVFC.svg?branch=master)](https://travis-ci.org/nettapper/CSVFC)  
 Comma seperated values flash cards  
 ![Screenie](demo.png)
 

@@ -26,7 +26,8 @@ maybeExtract i as =
 
 parseFileContents :: String -> [Card]
 parseFileContents s = map splitToCard $ filter (not . aComment) $ lines s
-  where aComment (s:_) = s == '#'
+  where aComment [] = False
+        aComment (c:_) = c == '#'
 
 splitToCard :: String -> Card
 splitToCard s = Card {front = f, back = b}
