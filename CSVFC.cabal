@@ -36,6 +36,7 @@ test-suite tests
   main-is:              tests.hs
   hs-source-dirs:       tests
   build-depends:        base
+                      , text
                       , CSVFC
                       , QuickCheck
                       , hspec

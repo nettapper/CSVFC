@@ -4,7 +4,8 @@ import Test.Hspec
 import Test.QuickCheck
 import Data.List (sort)
 
-import CSVFC (maybeExtract)
+import Data.Text (pack)
+import CSVFC (maybeExtract, Card(..))
 
 main :: IO ()
 main = do
@@ -40,9 +41,24 @@ runHspec = hspec $ do
     it "should be the same list if we sort [String] or we remove on element, prepend it, and sort that" $ do
       property (prop_maybeExtractSortedIfHasOrd :: Int -> [Int] -> Bool)
 
+    it "should be the same list if we sort [Card] or we remove on element, prepend it, and sort that" $ do
+      property (prop_maybeExtractSortedIfHasOrd :: Int -> [Card] -> Bool)
+
     it "should have one less in the output list of Strings for positive indexes" $ do
       property (prop_outputListHasOneLessThanOriginalForPositiveIntegers :: Int -> [String] -> Bool)
 
+    it "should have one less in the output list of Cards for positive indexes" $ do
+      property (prop_outputListHasOneLessThanOriginalForPositiveIntegers :: Int -> [Card] -> Bool)
+
+
+instance Arbitrary Card where
+  arbitrary = genCard
+
+genCard :: Gen Card
+genCard = do
+  f <- arbitrary
+  b <- arbitrary
+  return Card { front = (pack f), back = (pack b) }
 
 prop_maybeExtractSortedIfHasOrd :: Ord a => Int -> [a] -> Bool
 prop_maybeExtractSortedIfHasOrd i as = (sort as) == (sort as')

@@ -1,7 +1,5 @@
 module CSVFC
-  ( Card
-  , front
-  , back
+  ( Card(..)
   , parseFileContents
   , getNextCard
   , maybeExtract
@@ -12,7 +10,7 @@ import Data.Text (pack, breakOn, Text, tail, strip)
 data Card = Card
   { front :: Text
   , back :: Text
-  } deriving (Show)
+  } deriving (Show, Ord, Eq)
 
 getNextCard :: [Card] -> Int -> (Maybe Card, [Card])
 getNextCard = flip maybeExtract
