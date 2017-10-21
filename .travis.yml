@@ -33,11 +33,11 @@ before_install:
 
 install:
 # Build dependencies
-- stack --no-terminal setup
+- ls -al
 - stack --no-terminal clean
+- stack --no-terminal setup
 - stack --no-terminal build
 
 script:
-# Build the package, and run its tests
+# Build the package, its tests, and its docs and run the tests
 - stack --no-terminal test
-
