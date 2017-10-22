@@ -51,8 +51,34 @@ runHspec = hspec $ do
       property (prop_outputListHasOneLessThanOriginalForPositiveIntegers :: Int -> [Card] -> Bool)
 
   describe "parseFileContents" $ do
-    it "should parseNothing if given nothing" $ do
+    it "should parse Nothing if given nothing" $ do
       parseFileContents ([] :: String) `shouldBe` ([] :: [Card])
+
+    it "should parse Nothing if given a comment '#'" $ do
+      parseFileContents "#" `shouldBe` ([] :: [Card])
+
+    it "should parse Nothing if given a comment line '#' + other text" $ do
+      parseFileContents "# bhadkfjd dkjfdkj kdjfd " `shouldBe` ([] :: [Card])
+
+    it "should parse Nothing if given a multiple comment lines of '#'" $ do
+      parseFileContents "#    \n#    \n#" `shouldBe` ([] :: [Card])
+
+    it "should parse one card" $ do
+      length (parseFileContents "front, back") `shouldBe` 1
+
+    it "should parse the front of the card before the comma and the back after" $ do
+      let c = Card { front = (pack "front"), back = (pack "back") }
+      parseFileContents "front, back" `shouldBe` [c]
+
+    it "should still parse the card with multiple comment lines" $ do
+      let pStr = "#hii\nfront, back\n# dkfjd\n"
+      let c = Card { front = (pack "front"), back = (pack "back") }
+      parseFileContents pStr `shouldBe` [c]
+
+    it "should be able to have commas in the back of the card. AKA the first comma should delimit the card" $ do
+      let pStr = "front, back,,,more text here, yeah"
+      let c = Card { front = (pack "front"), back = (pack "back,,,more text here, yeah") }
+      parseFileContents pStr `shouldBe` [c]
 
 
 instance Arbitrary Card where
