@@ -5,7 +5,7 @@ import Test.QuickCheck
 import Data.List (sort)
 
 import Data.Text (pack)
-import CSVFCore (maybeExtract, Card(..))
+import CSVFCore (maybeExtract, Card(..), parseFileContents)
 
 main :: IO ()
 main = do
@@ -49,6 +49,10 @@ runHspec = hspec $ do
 
     it "should have one less in the output list of Cards for positive indexes" $ do
       property (prop_outputListHasOneLessThanOriginalForPositiveIntegers :: Int -> [Card] -> Bool)
+
+  describe "parseFileContents" $ do
+    it "should parseNothing if given nothing" $ do
+      parseFileContents ([] :: String) `shouldBe` ([] :: [Card])
 
 
 instance Arbitrary Card where
