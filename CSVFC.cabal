@@ -14,7 +14,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:       lib
-  exposed-modules:      CSVFCore
+  exposed-modules:      CSVFC
   ghc-options:          -Wall -fwarn-tabs
   build-depends:        base >= 4.7 && < 5
                       , text
@@ -32,7 +32,7 @@ executable CSVFC
 
 test-suite tests
   hs-source-dirs:       test
-  main-is:              TestCSVFCore.hs
+  main-is:              TestCSVFC.hs
   ghc-options:          -Wall -fno-warn-orphans
   type:                 exitcode-stdio-1.0
   build-depends:        base

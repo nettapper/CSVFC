@@ -1,4 +1,4 @@
-module CSVFCore
+module CSVFC
   ( Card(..)
   , parseFileContents
   , getNextCard

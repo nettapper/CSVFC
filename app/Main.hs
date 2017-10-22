@@ -4,7 +4,7 @@ import System.IO
 import System.Random (randomRIO)
 import System.Exit (exitSuccess)
 import Data.Text (unpack)
-import CSVFCore (Card, front, back, getNextCard, parseFileContents)
+import CSVFC (Card, front, back, getNextCard, parseFileContents)
 
 filePath :: String
 filePath = "./test.csv"

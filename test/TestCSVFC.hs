@@ -5,7 +5,7 @@ import Test.QuickCheck
 import Data.List (sort)
 
 import Data.Text (pack)
-import CSVFCore (maybeExtract, Card(..), parseFileContents)
+import CSVFC (maybeExtract, Card(..), parseFileContents)
 
 main :: IO ()
 main = do
