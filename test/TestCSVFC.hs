@@ -80,6 +80,16 @@ runHspec = hspec $ do
       let c = Card { front = (pack "front"), back = (pack "back,,,more text here, yeah") }
       parseFileContents pStr `shouldBe` [c]
 
+    it "should parse two cards with \\n as a newline" $ do
+      let pStr = "front, back\nfront,back"
+      let c = Card { front = (pack "front"), back = (pack "back") }
+      parseFileContents pStr `shouldBe` [c, c]
+
+    it "should parse two cards with \\r\\n as a CRLF" $ do
+      let pStr = "front, back\r\nfront,back"
+      let c = Card { front = (pack "front"), back = (pack "back") }
+      parseFileContents pStr `shouldBe` [c, c]
+
 
 instance Arbitrary Card where
   arbitrary = genCard
