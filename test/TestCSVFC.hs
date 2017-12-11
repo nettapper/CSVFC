@@ -63,6 +63,10 @@ runHspec = hspec $ do
     it "should parse Nothing if given a multiple comment lines of '#'" $ do
       parseFileContents "#    \n#    \n#" `shouldBe` ([] :: [Card])
 
+    it "should not parse a comment after a valid card" $ do
+      let c = Card { front = (pack "front"), back = (pack "back") }
+      parseFileContents "front, back # this is a comment and should be ignored" `shouldBe` [c]
+
     it "should parse one card" $ do
       length (parseFileContents "front, back") `shouldBe` 1
 
