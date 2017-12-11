@@ -25,9 +25,10 @@ maybeExtract i as =
   where allButLast = reverse . Prelude.tail . reverse
 
 parseFileContents :: String -> [Card]
-parseFileContents s = map splitToCard $ filter (not . aComment) $ lines s
-  where aComment [] = False
-        aComment (c:_) = c == '#'
+parseFileContents s = map splitToCard $ filter (not . isEmpty) $ map process $ lines s
+  where isEmpty = (== [])
+        process [] = []
+        process (c:cs) = if c == '#' then [] else c : process cs
 
 splitToCard :: String -> Card
 splitToCard s = Card {front = f, back = b}
