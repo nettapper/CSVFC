@@ -4,7 +4,7 @@ import System.IO
 import System.Random (randomRIO)
 import System.Exit (exitSuccess)
 import Data.Text (unpack)
-import CSVFC (Card, front, back, getNextCard, parseFileContents)
+import CSVFC (Card, front, back, getNextCard, parseFileContents, maybeInsertAtK)
 
 filePath :: String
 filePath = "./test.csv"
@@ -30,19 +30,30 @@ doUntilQ cards = do
   let (mc, cs) = getNextCard cards i
   case mc of
        Just c -> do
-         interactiveShowCard c
-         doUntilQ cs
+         diff <- interactiveShowCard c
+         case diff of
+              'a' -> do
+                idx <- randomRIO (0, length cs)
+                let cs' = maybeInsertAtK idx mc cs
+                doUntilQ cs'
+              _ -> doUntilQ cs
        Nothing -> return ()
   return ()
 
-interactiveShowCard :: Card -> IO ()
+interactiveShowCard :: Card -> IO Char
 interactiveShowCard card = do
   putStrLn "Press any key when ready to see the answer and when ready to proceed..."
   putStrLn $ "Q: " ++ (unpack $ front card)
   _ <- getChar
   putStr "\b"  -- a sneaky way to delete the getChar from above
   putStrLn $ "A: " ++ (unpack $ back card)
+  diff <- wasCardDifficult
+  return diff
+
+wasCardDifficult :: IO Char
+wasCardDifficult = do
+  putStrLn "(a) to see this card again later. Press any other key to continue."
   putStrLn ""
-  _ <- getChar
+  difficultly <- getChar
   putStr "\b"  -- a sneaky way to delete the getChar from above
-  return ()
+  return difficultly
