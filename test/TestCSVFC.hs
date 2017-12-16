@@ -5,7 +5,7 @@ import Test.QuickCheck
 import Data.List (sort)
 
 import Data.Text (pack)
-import CSVFC (maybeExtract, Card(..), parseFileContents)
+import CSVFC (maybeExtract, Card(..), parseFileContents, maybeInsertAtK)
 
 main :: IO ()
 main = do
@@ -13,6 +13,34 @@ main = do
 
 runHspec :: IO ()
 runHspec = hspec $ do
+  describe "maybeInsertAtK" $ do
+    it "should be the only value in the list if given an empty list" $ do
+      maybeInsertAtK 0 (Just 10) ([] :: [Int]) `shouldBe` [10]
+
+    it "should be the only value in the list if given an empty list even if the index is wrong" $ do
+      maybeInsertAtK (-1) (Just 10) ([] :: [Int]) `shouldBe` [10]
+
+    it "should be the only value in the list if given an empty list even if the index is really wrong" $ do
+      maybeInsertAtK 100 (Just 10) ([] :: [Int]) `shouldBe` [10]
+
+    it "should insert the value at the start if a negative index is given" $ do
+      maybeInsertAtK (-2) (Just 10) ([1, 2, 3] :: [Int]) `shouldBe` [10, 1, 2, 3]
+
+    it "should insert the value at the start if zero is given for the index" $ do
+      maybeInsertAtK 0 (Just 10) ([1, 2, 3] :: [Int]) `shouldBe` [10, 1, 2, 3]
+
+    it "should insert the value at the end if the index is larger than the length of the list" $ do
+      maybeInsertAtK 4 (Just 10) ([1, 2, 3] :: [Int]) `shouldBe` [1, 2, 3, 10]
+
+    it "should insert the value at the end if the index is a lot larger than the length of the list" $ do
+      maybeInsertAtK 42 (Just 10) ([1, 2, 3] :: [Int]) `shouldBe` [1, 2, 3, 10]
+
+    it "should insert the value at the in the middle according to the index" $ do
+      maybeInsertAtK 1 (Just 10) ([1, 2, 3] :: [Int]) `shouldBe` [1, 10, 2, 3]
+
+    it "should not change the list if we are inserting nothing" $ do
+      maybeInsertAtK 1 Nothing ([1, 2, 3] :: [Int]) `shouldBe` [1, 2, 3]
+
   describe "maybeExtract" $ do
     it "should return Nothing on an empty list of ints" $ do
       maybeExtract 0 ([] :: [Int]) `shouldBe` (Nothing, [])

@@ -3,6 +3,7 @@ module CSVFC
   , parseFileContents
   , getNextCard
   , maybeExtract
+  , maybeInsertAtK
   ) where
 
 import Data.Text (pack, breakOn, Text, tail, strip)
@@ -23,6 +24,9 @@ maybeExtract i as =
            [] -> (Nothing, bhalf)
            _ -> (Just (last fhalf), allButLast fhalf ++ bhalf)
   where allButLast = reverse . Prelude.tail . reverse
+
+maybeInsertAtK :: Int -> Maybe a -> [a] -> [a]
+maybeInsertAtK = undefined
 
 parseFileContents :: String -> [Card]
 parseFileContents s = map splitToCard $ filter (not . isEmpty) $ map process $ lines s
