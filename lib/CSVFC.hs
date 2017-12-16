@@ -27,10 +27,7 @@ maybeExtract i as =
 
 maybeInsertAtK :: Int -> Maybe a -> [a] -> [a]
 maybeInsertAtK _ Nothing xs = xs
-maybeInsertAtK index (Just a) xs
-  | index <= 0 = a : xs
-  | index >= (length xs) = reverse $ a : (reverse xs)
-  | otherwise = (take index xs) ++ [a] ++ (drop index xs)
+maybeInsertAtK index (Just a) xs = (take index xs) ++ [a] ++ (drop index xs)
 
 parseFileContents :: String -> [Card]
 parseFileContents s = map splitToCard $ filter (not . isEmpty) $ map process $ lines s
