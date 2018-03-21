@@ -43,10 +43,10 @@ doUntilQ cards = do
 interactiveShowCard :: Card -> IO Char
 interactiveShowCard card = do
   putStrLn "Press any key when ready to see the answer and when ready to proceed..."
-  putStrLn $ "Q: " ++ (unpack $ front card)
+  putStrLn $ "\t Q: " ++ (unpack $ front card)
   _ <- getChar
   putStr "\b"  -- a sneaky way to delete the getChar from above
-  putStrLn $ "A: " ++ (unpack $ back card)
+  putStrLn $ "\t A: " ++ (unpack $ back card)
   diff <- wasCardDifficult
   return diff
 
